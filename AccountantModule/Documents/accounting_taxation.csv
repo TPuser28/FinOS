@@ -1,0 +1,15 @@
+Type,Account,Amount
+TB,Cash,50000
+TB,Accounts Receivable,30000
+TB,Inventory,25000
+TB,Accounts Payable,15000
+TB,Long-Term Debt,50000
+TB,Common Stock,70000
+TB,Retained Earnings,75000
+IS,Revenue,200000
+IS,COGS,80000
+IS,Operating Expenses,40000
+IS,Tax Expense,15000
+Cost,Marketing Dept,10000
+Cost,R&D Dept,15000
+Cost,Operations Dept,20000

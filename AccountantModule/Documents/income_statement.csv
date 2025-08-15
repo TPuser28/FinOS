@@ -1,0 +1,23 @@
+Category,Account,Amount
+Revenue,Product Sales - A,45000
+Revenue,Product Sales - B,30000
+Revenue,Service Revenue,15000
+Revenue,Other Operating Income,5000
+COGS,Raw Materials,-18000
+COGS,Direct Labor,-12000
+COGS,Manufacturing Overhead,-7000
+Operating Expenses,Salaries & Wages,-14000
+Operating Expenses,Rent,-6000
+Operating Expenses,Utilities,-2500
+Operating Expenses,Marketing & Advertising,-5000
+Operating Expenses,Office Supplies,-1200
+Operating Expenses,Insurance,-1800
+Operating Expenses,Repairs & Maintenance,-1500
+Operating Expenses,Travel & Entertainment,-2000
+Depreciation & Amortization,Depreciation - Equipment,-2500
+Depreciation & Amortization,Amortization - Intangible Assets,-1200
+Other Expenses,Professional Fees,-3500
+Other Expenses,Training & Development,-1500
+Summary,Gross Profit,45000
+Summary,Operating Income,30000
+Summary,Net Income,25000
