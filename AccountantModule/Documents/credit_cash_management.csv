@@ -1,9 +1,0 @@
-Type,Customer,Invoice No,Amount,Due Date,Paid,Transaction,Status
-Invoice,Alpha Corp,INV1001,15000,2025-08-10,5000.0,,
-Invoice,Beta LLC,INV1002,8000,2025-08-05,0.0,,
-Invoice,Gamma Ltd,INV1003,12000,2025-08-12,12000.0,,
-Invoice,Delta Inc,INV1004,5000,2025-08-08,2000.0,,
-Suspense,Alpha Corp,,2000,,,Unmatched Payment,Pending
-Suspense,Beta LLC,,500,,,Unapplied Credit,Pending
-Suspense,Gamma Ltd,,0,,,Unmatched Payment,Cleared
-Suspense,Delta Inc,,300,,,Unapplied Credit,Pending

@@ -1,9 +1,0 @@
-Type,Item,Likelihood,Impact,Mitigation,Planned Date,Responsible,Status
-Risk,Unauthorized access to financial system,High,High,Implement multi-factor authentication and access logs,,,
-Risk,Invoice duplication,Medium,Medium,Regular reconciliation and approval workflow,,,
-Risk,Delayed project reporting,Medium,High,Weekly status meetings and automated dashboards,,,
-Risk,Non-compliance with audit procedures,Low,High,Training and periodic internal audits,,,
-Audit,Cash reconciliation,,,,2025-08-20,Internal Audit Team,Pending
-Audit,Inventory count,,,,2025-08-22,Operations Team,Pending
-Audit,Expense approval review,,,,2025-08-25,Finance Team,Pending
-Audit,IT access control review,,,,2025-08-28,IT Team,Pending
