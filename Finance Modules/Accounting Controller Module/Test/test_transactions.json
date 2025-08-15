@@ -1,0 +1,65 @@
+[
+  {
+    "date": "2024-01-15",
+    "amount": 1500.00,
+    "account_code": "1001",
+    "description": "Office Supplies Purchase",
+    "type": "expense"
+  },
+  {
+    "date": "2024-01-15",
+    "amount": 1500.00,
+    "account_code": "1001",
+    "description": "Office Supplies Purchase",
+    "type": "expense"
+  },
+  {
+    "date": "2024-01-16",
+    "amount": 50000,
+    "account_code": "4001",
+    "description": "Client Payment",
+    "type": "revenue"
+  },
+  {
+    "date": "2024-01-17",
+    "amount": 9999999,
+    "account_code": "5001",
+    "description": "Large Equipment Purchase",
+    "type": "expense"
+  },
+  {
+    "date": "2024-01-18",
+    "amount": 100,
+    "account_code": "9999",
+    "description": "Test Transaction",
+    "type": "expense"
+  },
+  {
+    "date": "2024-01-19",
+    "amount": 2500,
+    "account_code": "2001",
+    "description": "Loan Payment",
+    "type": "liability"
+  },
+  {
+    "date": "invalid-date",
+    "amount": "not-a-number",
+    "account_code": "abc123",
+    "description": "  Invalid Transaction  ",
+    "type": "unknown"
+  },
+  {
+    "date": "2024-01-20",
+    "amount": 10000,
+    "account_code": "1001",
+    "description": "Round Amount Transaction",
+    "type": "expense"
+  },
+  {
+    "date": "2024-01-21",
+    "amount": 75,
+    "account_code": "5001",
+    "description": "Small Office Expense",
+    "type": "expense"
+  }
+]

@@ -1,0 +1,387 @@
+openapi: 3.0.3
+info:
+  title: Software Development OS API
+  description: |
+    Comprehensive API for the Software Development OS platform.
+    Provides endpoints for AI-powered code analysis, project management,
+    and development workflow automation.
+  version: 1.0.0
+  contact:
+    name: Development Team
+    email: dev@softwaredevos.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.softwaredevos.com
+    description: Production server
+
+tags:
+  - name: Modules
+    description: Module management and configuration
+  - name: Chats
+    description: Chat-based interactions with AI agents
+  - name: Messages
+    description: Message handling and history
+  - name: Files
+    description: File upload and processing
+  - name: Jobs
+    description: Background job management
+
+paths:
+  /modules:
+    get:
+      summary: List available modules
+      description: Retrieve all available development modules
+      tags:
+        - Modules
+      responses:
+        '200':
+          description: List of modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Module'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /modules/{moduleKey}/chats:
+    get:
+      summary: List chats for a module
+      description: Retrieve all chats associated with a specific module
+      tags:
+        - Chats
+      parameters:
+        - name: moduleKey
+          in: path
+          required: true
+          description: Module identifier
+          schema:
+            type: string
+          example: "code-quality"
+      responses:
+        '200':
+          description: List of chats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chat'
+        '404':
+          description: Module not found
+        '500':
+          description: Internal server error
+
+    post:
+      summary: Create a new chat
+      description: Create a new chat session for a specific module
+      tags:
+        - Chats
+      parameters:
+        - name: moduleKey
+          in: path
+          required: true
+          description: Module identifier
+          schema:
+            type: string
+          example: "code-quality"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Optional chat title
+                  example: "Code review session"
+      responses:
+        '201':
+          description: Chat created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Chat ID
+                    example: 123
+        '400':
+          description: Invalid request
+        '404':
+          description: Module not found
+
+  /chats/{chatId}/messages:
+    get:
+      summary: Get chat messages
+      description: Retrieve all messages for a specific chat
+      tags:
+        - Messages
+      parameters:
+        - name: chatId
+          in: path
+          required: true
+          description: Chat identifier
+          schema:
+            type: integer
+          example: 123
+        - name: limit
+          in: query
+          description: Maximum number of messages to return
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of messages to skip
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Chat messages with metadata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chat:
+                    $ref: '#/components/schemas/Chat'
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '404':
+          description: Chat not found
+
+    post:
+      summary: Send a message
+      description: Send a new message to a chat
+      tags:
+        - Messages
+      parameters:
+        - name: chatId
+          in: path
+          required: true
+          description: Chat identifier
+          schema:
+            type: integer
+          example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  description: Message content
+                  example: "Can you review this code for potential issues?"
+                agent_key:
+                  type: string
+                  description: Optional agent identifier
+                  example: "code-reviewer"
+      responses:
+        '201':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_message:
+                    $ref: '#/components/schemas/Message'
+                  assistant_message:
+                    $ref: '#/components/schemas/Message'
+        '400':
+          description: Invalid message
+        '404':
+          description: Chat not found
+
+  /upload:
+    post:
+      summary: Upload a file
+      description: Upload a file for processing and analysis
+      tags:
+        - Files
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: File to upload
+                meta:
+                  type: string
+                  description: Optional metadata (JSON string)
+                  example: '{"module": "code-quality", "tags": ["python", "backend"]}'
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "file.py received, ingestion in progress"
+                  job_id:
+                    type: string
+                    description: Background job identifier
+                    example: "job_abc123"
+        '400':
+          description: Invalid file
+        '413':
+          description: File too large
+
+  /jobs/{jobId}:
+    get:
+      summary: Get job status
+      description: Check the status of a background processing job
+      tags:
+        - Jobs
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          description: Job identifier
+          schema:
+            type: string
+          example: "job_abc123"
+      responses:
+        '200':
+          description: Job status information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                  status:
+                    type: string
+                    enum: [queued, started, finished, failed]
+                  result:
+                    type: object
+                    description: Job result (if finished)
+        '404':
+          description: Job not found
+
+components:
+  schemas:
+    Module:
+      type: object
+      required:
+        - key
+        - name
+      properties:
+        key:
+          type: string
+          description: Unique module identifier
+          example: "code-quality"
+        name:
+          type: string
+          description: Human-readable module name
+          example: "Code Quality Module"
+
+    Chat:
+      type: object
+      required:
+        - id
+        - module_key
+        - created_at
+      properties:
+        id:
+          type: integer
+          description: Unique chat identifier
+          example: 123
+        title:
+          type: string
+          description: Optional chat title
+          example: "Code review session"
+        module_key:
+          type: string
+          description: Associated module
+          example: "code-quality"
+        created_at:
+          type: string
+          format: date-time
+          description: Chat creation timestamp
+          example: "2025-08-15T09:48:12+00:00"
+
+    Message:
+      type: object
+      required:
+        - id
+        - chat_id
+        - role
+        - content
+        - created_at
+      properties:
+        id:
+          type: integer
+          description: Unique message identifier
+          example: 456
+        chat_id:
+          type: integer
+          description: Associated chat ID
+          example: 123
+        role:
+          type: string
+          enum: [user, assistant]
+          description: Message sender role
+          example: "user"
+        content:
+          type: string
+          description: Message content
+          example: "Can you review this code?"
+        agent_key:
+          type: string
+          description: AI agent identifier (for assistant messages)
+          example: "code-reviewer"
+        created_at:
+          type: string
+          format: date-time
+          description: Message creation timestamp
+          example: "2025-08-15T09:48:15+00:00"
+
+    Error:
+      type: object
+      required:
+        - detail
+      properties:
+        detail:
+          type: string
+          description: Error description
+          example: "Chat not found"
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
